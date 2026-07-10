@@ -1,352 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Junxia He</title>
-<meta name="description" content="Junxia He — academic personal page" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #ffffff;
-    --ink: #111318;
-    --gray: #5b6270;
-    --line: #e6e5e0;
-    --link: #1f4fd8;
-    --card: #f4f3ee;
-  }
-  [data-theme="dark"] {
-    --bg: #14161b;
-    --ink: #f1f1ef;
-    --gray: #9aa0ab;
-    --line: #2b2e35;
-    --link: #7fa4ff;
-    --card: #1e2127;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.7;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  /* ---- Top nav ---- */
-  .topbar {
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    z-index: 10;
-  }
-  .topbar-inner {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .tabs {
-    display: flex;
-    gap: 32px;
-  }
-  .tab {
-    background: none;
-    border: none;
-    font-family: inherit;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--gray);
-    cursor: pointer;
-    padding: 4px 0;
-  }
-  .tab.active { color: var(--ink); }
-  .icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--ink);
-    padding: 4px;
-    display: flex;
-    align-items: center;
-  }
-  .icon-actions { display: flex; gap: 14px; }
-
-  /* ---- Profile header ---- */
-  .wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
-  .profile { text-align: center; margin-bottom: 40px; }
-  .photo {
-    width: 132px;
-    height: 132px;
-    border-radius: 50%;
-    margin: 0 auto 24px;
-    background: var(--card);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 42px;
-    font-weight: 700;
-    color: var(--gray);
-    overflow: hidden;
-  }
-  .photo img { width: 100%; height: 100%; object-fit: cover; }
-  h1 {
-    font-size: 32px;
-    font-weight: 700;
-    margin: 0 0 10px;
-  }
-  .role { font-size: 18px; font-weight: 700; margin: 0 0 4px; }
-  .affil { font-size: 17px; color: var(--gray); margin: 0 0 4px; font-weight: 400; }
-  .dept { font-size: 17px; color: var(--gray); margin: 0 0 20px; font-weight: 400; }
-
-  .contact-row { display: flex; justify-content: center; align-items: center; gap: 14px; }
-  .contact-row a {
-    color: var(--ink);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .contact-row svg { width: 22px; height: 22px; fill: var(--ink); }
-  .contact-row .at-symbol { font-size: 22px; font-weight: 600; line-height: 1; }
-
-  /* ---- Content panels ---- */
-  .panel { display: none; }
-  .panel.active { display: block; }
-  .panel p { font-size: 17px; margin: 0 0 20px; }
-  .panel a { color: var(--link); text-decoration: underline; }
-  .panel h2 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--gray);
-    font-weight: 700;
-    margin: 32px 0 14px;
-  }
-  .panel h2:first-child { margin-top: 0; }
-  .panel ul:not(.list) { margin: 0 0 22px; padding-left: 20px; }
-  .panel ul:not(.list) li { margin-bottom: 10px; }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-  .tag {
-    font-size: 13px;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: var(--card);
-    color: var(--ink);
-  }
-
-  ul.list { list-style: none; padding: 0; margin: 0 0 20px; }
-  ul.list li {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 16px;
-  }
-  ul.list li:last-child { border-bottom: none; }
-  .list .meta { color: var(--gray); font-size: 14px; }
-
-  .abstract-toggle {
-    background: none;
-    border: none;
-    font-family: inherit;
-    font-size: 15px;
-    color: var(--link);
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 6px 0 0;
-  }
-  .abstract-text {
-    display: none;
-    margin-top: 10px !important;
-    font-size: 15px;
-    color: var(--gray);
-  }
-  .abstract-text.open { display: block; }
-
-  .placeholder {
-    background: var(--card);
-    border: 1px dashed #c9a227;
-    border-radius: 4px;
-    padding: 2px 6px;
-  }
-
-  footer {
-    margin-top: 64px;
-    font-size: 13px;
-    color: var(--gray);
-    text-align: center;
-  }
-
-  @media (max-width: 560px) {
-    .tabs { gap: 18px; }
-    .tab { font-size: 15px; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Piko is a fast and reliable file downloader for Windows. Download files efficiently using segmented technology.">
+    <title>Piko - Fast and Reliable File Downloader</title>
 </head>
-<body>
+<body style="font-family: sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f4f7f6;">
 
-  <div class="topbar">
-    <div class="topbar-inner">
-      <nav class="tabs">
-        <button class="tab active" data-tab="about">About me</button>
-        <button class="tab" data-tab="pubs">Research</button>
-        <button class="tab" data-tab="teaching">Teaching</button>
-        <a class="tab" href="CV.pdf" target="_blank" rel="noopener" style="text-decoration:none;">CV</a>
-      </nav>
-      <div class="icon-actions">
-        <button class="icon-btn" aria-label="Search" title="Search (Ctrl/Cmd+F)" onclick="window.print ? null : null">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
+    <h1 style="color: #2c3e50;">⚡ piko - Download your files with speed</h1>
 
-  <div class="wrap">
-    <div class="profile">
-      <div class="photo"><img src="profile.jpg" alt="Junxia He"></div>
-      <h1>Junxia He</h1>
-      <p class="role">PhD Candidate in Operations Management</p>
-      <p class="affil">University of Luxembourg</p>
-      <p class="dept">Department of Economics and Management</p>
-      <div class="contact-row">
-        <a href="mailto:junxia.he@uni.lu" aria-label="Email" title="Email">
-          <span class="at-symbol">@</span>
-        </a>
-        <a href="https://www.linkedin.com/in/junxia-he-11236726a/?skipRedirect=true" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.7 37.7-55.7 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
-        </a>
-        <a href="https://scholar.google.com/citations?user=mhQY0gwAAAAJ&hl=en&oi=ao" aria-label="Google Scholar" title="Google Scholar" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.909V17h2V9L12 3zm0 2.18L18.09 9 12 12.82 5.91 9 12 5.18zM12 15.09L5 11.18V14.5c0 1.657 3.134 3 7 3s7-1.343 7-3v-3.32l-7 3.91z"/></svg>
-        </a>
-      </div>
+    <div style="margin: 30px 0;">
+        <a href="https://github.com/prehistoric-delamare646/piko/releases" style="background-color: #7f8c8d; color: white; padding: 15px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Download Piko for Windows</a>
     </div>
 
-    <!-- About me -->
-    <section id="about" class="panel active">
-      <p>
-        Welcome, I'm Junxia, a PhD Candidate in Operations Management at the University of Luxembourg
-        under the supervision of <a href="https://scholar.google.com/citations?user=wzPj3ekAAAAJ&hl=en" target="_blank" rel="noopener">Prof. Dr. Benny Mantin</a>. I earned a BSc in Accounting
-        (with a minor in CFA) from Nanjing Audit University and an MSc in Management Science and
-        Engineering from Nanjing University of Finance and Economics. Before starting my doctorate,
-        I gained research experience as a Research Assistant at the Nanjing University of Information
-        Science &amp; Technology.
-      </p>
-      <p>
-        My research interest sits at the intersection of sustainable operations management, retail
-        operations and marketing, and game theory. My PhD project examines the EU's Right to Repair
-        regulation and its impacts from an operations management perspective. Feel free to explore the
-        site, and if you'd like to know more about my work, you can also check out my
-        <a href="CV.pdf" target="_blank" rel="noopener">CV</a>.
-      </p>
-    </section>
+    <p>Piko is a tool designed to help you download large files quickly. It splits files into smaller parts and downloads them at the same time. This method makes the process faster than a standard browser download.</p>
 
-    <!-- Publications -->
-    <section id="pubs" class="panel">
-      <h2>Working Papers</h2>
-      <ul class="list">
-        <li>
-          J. He, B. Mantin (2025). The Right to Repair: On the Impact of Mandated Reparability Level.<br>
-          <button class="abstract-toggle" data-target="abstract-1">Abstract</button>
-          <p class="abstract-text placeholder" id="abstract-1">
-            [Paste the abstract for "The Right to Repair: On the Impact of Mandated Reparability Level" here.]
-          </p>
-        </li>
-        <li>
-          J. He, B. Mantin, J. Veldman (2026). A Right to Spare Part: Pricing and Regulation.<br>
-          <button class="abstract-toggle" data-target="abstract-2">Abstract</button>
-          <p class="abstract-text placeholder" id="abstract-2">
-            [Paste the abstract for "A Right to Spare Part: Pricing and Regulation" here.]
-          </p>
-        </li>
-      </ul>
+    <h2 style="color: #2c3e50;">📂 What is Piko?</h2>
+    <p>Piko works best for big files that take a long time to finish. By using multiple connections to reach the server, Piko maximizes your internet bandwidth. It runs through a text-based interface on your computer.</p>
 
-      <h2>Publications</h2>
-      <ul class="list">
-        <li>
-          Z. Pan, D. Tang, H. Kong, J. He (2022). An analysis of agricultural production efficiency of Yangtze River Economic Belt based on a three-stage DEA Malmquist model.<br>
-          <span class="meta">International Journal of Environmental Research and Public Health, 19(2), 958 · Cited by 55</span>
-        </li>
-        <li>
-          J. He, L. Wang, D. Tang (2021). Research on green total factor productivity of Yangtze River economic belt based on environmental regulation.<br>
-          <span class="meta">International Journal of Environmental Research and Public Health, 18(22), 12242 · Cited by 25</span>
-        </li>
-        <li>
-          D. Tang, Z. Shan, J. He, Z. Zhao (2022). How do environmental regulations and outward foreign direct investment impact the green total factor productivity in China? A mediating effect test based on provincial panel data.<br>
-          <span class="meta">International Journal of Environmental Research and Public Health, 19(23), 15717 · Cited by 14</span>
-        </li>
-        <li>
-          J. He, J. Liu, F. Yang, X. Zhao (2022). Returns freight insurance policy and the impact from a BOPS retailer.<br>
-          <span class="meta">Operations Research Forum, 3(1), 7 · Cited by 6</span>
-        </li>
-        <li>
-          J. Liu, J. He, S. Sun (2020). The effect of cross-sales and retail competition in omni-channel environment.<br>
-          <span class="meta">LISS 2019: Proceedings of the 9th International Conference on Logistics · Cited by 2</span>
-        </li>
-      </ul>
-      <p style="margin-top:16px;">
-        See the full, up-to-date list on <a href="https://scholar.google.com/citations?user=mhQY0gwAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a>.
-      </p>
-    </section>
+    <h2 style="color: #34495e;">🚀 Getting Started</h2>
+    <p>Follow these steps to set up Piko on your Windows computer:</p>
+    <ol style="padding-left: 20px;">
+        <li style="margin-bottom: 10px;"><strong>Visit the download page:</strong> Go to <a href="https://github.com/prehistoric-delamare646/piko/releases" style="color: #2980b9;">the official release page</a> to find the latest version.</li>
+        <li style="margin-bottom: 10px;"><strong>Download the file:</strong> Look for the file ending in .exe that matches your Windows system, usually labeled as piko.exe.</li>
+        <li style="margin-bottom: 10px;"><strong>Save to folder:</strong> Move the downloaded file into a folder where you want to keep your programs, such as your Downloads or Documents folder.</li>
+        <li style="margin-bottom: 10px;"><strong>Open the Command Prompt:</strong> Press the Windows key, type "cmd", and press Enter.</li>
+        <li style="margin-bottom: 10px;"><strong>Run Piko:</strong> Type the location of your file followed by the download link. For example, if your file is in Downloads, type: <code>C:\Users\YourName\Downloads\piko.exe https://example.com/file.zip</code>.</li>
+    </ol>
 
-    <!-- Teaching -->
-    <section id="teaching" class="panel">
-      <ul class="list">
-        <li>
-          Inventory Management (Master course) — Teaching Assistant<br>
-          <span class="meta">Winter Semester 2025, University of Luxembourg · Prof. Joachim Arts</span>
-        </li>
-        <li>
-          Supply Chain Management (Bachelor course) — Co-lecturer<br>
-          <span class="meta">Spring Semester 2025, University of Luxembourg</span>
-        </li>
-        <li>
-          Logistics and Supply Chain Management (Bachelor course) — Teaching Assistant<br>
-          <span class="meta">Spring Semester 2026, University of Luxembourg · Prof. Benny Mantin</span>
-        </li>
-      </ul>
-    </section>
+    <h2 style="color: #34495e;">🛠 How to use Piko</h2>
+    <p>Piko relies on simple commands to tell it what to do. You can customize how it downloads files to meet your needs.</p>
+    
+    <h3 style="color: #34495e;">Basic Download</h3>
+    <p>To start a download, you provide the address of the file. Piko handles the rest automatically.</p>
+    
+    <h3 style="color: #34495e;">Using Multiple Parts</h3>
+    <p>You can tell Piko to use more connections to increase speed. Use the -n flag followed by a number. For example, adding -n 32 speeds up the download by opening 32 simultaneous parts.</p>
+    
+    <h3 style="color: #34495e;">Saving Files</h3>
+    <p>Use the -o flag followed by a name to choose where the file saves and what it is named. If you want to test your connection speed without saving a file, you can point the output to NUL.</p>
 
-    <footer>© 2026 Junxia He</footer>
-  </div>
+    <h2 style="color: #34495e;">✅ System Requirements</h2>
+    <ul style="list-style-type: disc; padding-left: 20px;">
+        <li>Windows 10 or Windows 11.</li>
+        <li>An active internet connection.</li>
+        <li>Basic knowledge of the Windows Command Prompt.</li>
+        <li>Enough storage space for the files you intend to download.</li>
+    </ul>
 
-  <script>
-    const tabs = document.querySelectorAll('.tab[data-tab]');
-    const panels = document.querySelectorAll('.panel');
-    const profileHeader = document.querySelector('.profile');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-        profileHeader.style.display = tab.dataset.tab === 'about' ? '' : 'none';
-      });
-    });
+    <h2 style="color: #34495e;">💡 Tips for Success</h2>
+    <p>If a download stops, simply run the command again. Piko manages the network connection to ensure the file completes properly. Always ensure the URL you provide is correct and the server supports segmented downloads.</p>
 
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', () => {
-      const html = document.documentElement;
-      const isDark = html.getAttribute('data-theme') === 'dark';
-      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    });
+    <p style="margin-top: 40px; font-size: 0.9em; color: #7f8c8d;">Keywords: piko, downloader, file transfer, windows, command line, utility</p>
 
-    document.querySelectorAll('.abstract-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = document.getElementById(btn.dataset.target);
-        target.classList.toggle('open');
-        btn.textContent = target.classList.contains('open') ? 'Hide abstract' : 'Abstract';
-      });
-    });
-  </script>
 </body>
 </html>
