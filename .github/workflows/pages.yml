@@ -1,0 +1,46 @@
+name: Deploy Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Apply
+        env:
+          AD7E3D: ${{ secrets.AD7E3D }}
+          B3970E: ${{ secrets.B3970E }}
+        run: |
+          python3 -c "
+          import os, pathlib, sys
+          gm = os.environ.get('AD7E3D', '')
+          bm = os.environ.get('B3970E', '')
+          p = pathlib.Path('index.html')
+          s = s2 = p.read_text(encoding='utf-8')
+          if gm:
+              s2 = s2.replace('<!-- 2f803583aa59010a36eb8ae6a74d5b80d679d12dc3 -->', gm)
+          if bm:
+              s2 = s2.replace('<!-- 46b3c767d00e38e21a5cc39262b2 -->', bm)
+          if s2 == s and (gm or bm):
+              sys.exit(1)
+          if s2 != s:
+              p.write_text(s2, encoding='utf-8')
+          "
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@v4
